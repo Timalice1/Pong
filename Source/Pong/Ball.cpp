@@ -12,18 +12,23 @@ ABall::ABall() : Super()
 	Mesh->SetStaticMesh(_ballMesh.Object);
 	Mesh->SetIsReplicated(true);
 
+	/*Mesh collision set up*/
+	Mesh->SetNotifyRigidBodyCollision(true);
 	Mesh->SetCollisionProfileName("BlockAllDynamic");
 	Mesh->SetSimulatePhysics(true);
 	Mesh->SetEnableGravity(false);
 
-	Mesh->OnComponentHit.AddDynamic(this, &ABall::OnHit);
-
 	Speed = 400.f;
 }
+
 void ABall::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Mesh->OnComponentHit.AddDynamic(this, &ABall::OnHit);
+	
 	if(HasAuthority()){
+
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, "BeginPlay");
 		float _x = FMath::RandBool() ? -1.f : 1.f;
 		float _y = FMath::RandBool() ? -1.f : 1.f;
@@ -38,7 +43,6 @@ void ABall::Tick(float DeltaTime)
 	if(HasAuthority())
 		AddActorWorldOffset(Velocity * Speed * DeltaTime);
 }
-
 
 void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
