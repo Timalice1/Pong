@@ -23,7 +23,7 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UStaticMeshComponent* Mesh;
-
+	
 	UPROPERTY(VisibleDefaultsOnly)
 	UCameraComponent* Camera;
 
@@ -34,5 +34,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Server, Reliable)
 	void SR_SetLocation(FVector NewLocation);
+
 };
 

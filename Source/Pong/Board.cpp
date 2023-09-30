@@ -4,13 +4,15 @@ ABoard::ABoard()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	SetReplicates(true);
+
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> _cubeMesh(TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Board");
 	Mesh->SetStaticMesh(_cubeMesh.Object);
-	Mesh->CastShadow = false;
+	Mesh->SetIsReplicated(true);
 
-	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
+	Camera = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	Camera->AttachToComponent(Mesh, FAttachmentTransformRules::KeepRelativeTransform);
 
 	PawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>("Pawn movement component");
@@ -20,7 +22,6 @@ void ABoard::BeginPlay()
 {
 	Super::BeginPlay();
 }
-
 
 void ABoard::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
