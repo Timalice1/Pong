@@ -4,14 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Ball.h"
+
 #include "PongGameModeBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class PONG_API APongGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	APongGameModeBase();
+
+protected:
+	virtual void BeginPlay() override;
+
 };
