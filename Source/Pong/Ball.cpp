@@ -25,32 +25,34 @@ void ABall::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Mesh->OnComponentHit.AddDynamic(this, &ABall::OnHit);
-	
+	/*Set initial movement direction*/
 	if(HasAuthority()){
-
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, "BeginPlay");
 		float _x = FMath::RandBool() ? -1.f : 1.f;
 		float _y = FMath::RandBool() ? -1.f : 1.f;
-
 		Velocity = FVector(_x, _y, 0);
 	}
+
+	Mesh->OnComponentHit.AddDynamic(this, &ABall::OnHit);
 }
 
 void ABall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	/*Move ball*/
 	if(HasAuthority())
 		AddActorWorldOffset(Velocity * Speed * DeltaTime);
 }
 
 void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	//Change ball direction on hit
+	//Increase speed
 	if (HasAuthority()) {
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, "Hit");
 		Velocity = Cast<ABoard>(OtherActor) ?
 			FVector(Velocity.X * -1.f, Velocity.Y, Velocity.Z) :
 			FVector(Velocity.X, Velocity.Y * -1.f, Velocity.Z);
+
 		Speed += 50;
 	}
 }

@@ -14,9 +14,12 @@ class PONG_API APongGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 	
 public:
-	APongGameModeBase();
+	void SpawnBall();
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ABall> BallClass;
 
 };
