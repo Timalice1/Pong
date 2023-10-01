@@ -13,8 +13,11 @@ class PONG_API APongGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+	int ConnectedPlayers;
+
 public:
 	void SpawnBall();
+	void SpawnPlayer(APlayerController* Controller);
 
 protected:
 	virtual void BeginPlay() override;
@@ -22,4 +25,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ABall> BallClass;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ABoard> BoardClass;
 };
