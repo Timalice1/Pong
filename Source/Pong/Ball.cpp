@@ -18,12 +18,15 @@ ABall::ABall() : Super()
 	Mesh->SetSimulatePhysics(true);
 	Mesh->SetEnableGravity(false);
 
-	Speed = 400.f;
+	InitialSpeed = 400.f;
+	Acceleration = 20.f;
 }
 
 void ABall::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Speed = InitialSpeed;
 
 	/*Set initial movement direction*/
 	if(HasAuthority()){
@@ -53,6 +56,6 @@ void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimit
 			FVector(Velocity.X * -1.f, Velocity.Y, Velocity.Z) :
 			FVector(Velocity.X, Velocity.Y * -1.f, Velocity.Z);
 
-		Speed += 50;
+		Speed += Acceleration;
 	}
 }

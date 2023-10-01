@@ -13,6 +13,8 @@ class PONG_API ABall : public AActor
 
 	FVector Velocity;
 	
+	float Speed;
+	
 public:	
 	ABall();
 
@@ -25,7 +27,10 @@ protected:
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditDefaultsOnly)
-	float Speed;
+	float InitialSpeed;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Acceleration;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
